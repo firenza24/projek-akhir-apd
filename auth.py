@@ -1,6 +1,3 @@
-# auth.py
-# Modul autentikasi dengan batas percobaan 3 kali
-
 USERS = {
     "admin": {"password": "admin123", "role": "admin"},
     "inv": {"password": "inv123", "role": "inventory"},

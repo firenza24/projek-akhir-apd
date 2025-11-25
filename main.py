@@ -1,6 +1,3 @@
-# main.py
-# Integrasi semua modul
-
 from auth import login
 from admin import admin_menu
 from inventory import menu_inventory
@@ -12,7 +9,7 @@ def main():
     while True:
         user = login()
         if not user:
-            print("Gagal login 3 kali. Program keluar.")
+            print("Gagal login. Program keluar.")
             break
 
         role = user["role"]
