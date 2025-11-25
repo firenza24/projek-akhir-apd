@@ -1,55 +1,92 @@
 # admin.py
-# Modul untuk CRUD user dan melihat penjualan (data berasal dari kasir)
+# Modul admin dengan CRUD user + try/except + konfirmasi hapus
+# Menggunakan PrettyTable dan Inquirer
 
 from auth import USERS
-
-# sales_history tidak disimpan di sini, tetapi dipanggil dari kasir.py
+from prettytable import PrettyTable
+import inquirer
 
 def admin_menu():
     while True:
-        print("=== MENU ADMIN ===")
-        print("1. Lihat daftar user")
-        print("2. Tambah user")
-        print("3. Hapus user")
-        print("4. Lihat riwayat penjualan")
-        print("5. Kembali")
+        try:
+            pilihan = inquirer.list_input(
+                "=== MENU ADMIN ===",
+                choices=[
+                    ("CRUD User", "crud"),
+                    ("Lihat stok barang", "stok"),
+                    ("Lihat data penjualan", "sales"),
+                    ("Logout", "logout")
+                ]
+            )
+        except Exception:
+            print("Terjadi kesalahan input.\n")
+            continue
 
-        pilihan = input("Pilih menu: ").strip()
-
-        if pilihan == "1":
-            list_user()
-        elif pilihan == "2":
-            add_user()
-        elif pilihan == "3":
-            delete_user()
-        elif pilihan == "4":
-            # view_sales(sales_history)
-            print("Sales History belum ada")
-        elif pilihan == "5":
+        if pilihan == "crud":
+            crud_user()
+        elif pilihan == "stok":
+            print("\nData stok belum diintegrasikan.\n")
+        elif pilihan == "sales":
+            print("\nData penjualan belum diintegrasikan.\n")
+        elif pilihan == "logout":
             break
-        else:
-            print("Pilihan tidak valid.\n")
+
+
+# ------------------------------
+# CRUD USER
+# ------------------------------
+
+def crud_user():
+    while True:
+        try:
+            pilihan = inquirer.list_input(
+                "=== CRUD USER ===",
+                choices=[
+                    ("Lihat user", "list"),
+                    ("Tambah user", "add"),
+                    ("Hapus user", "delete"),
+                    ("Kembali", "back")
+                ]
+            )
+        except Exception:
+            print("Input tidak valid.\n")
+            continue
+
+        if pilihan == "list":
+            list_user()
+        elif pilihan == "add":
+            add_user()
+        elif pilihan == "delete":
+            delete_user()
+        elif pilihan == "back":
+            break
 
 
 def list_user():
     print("\n=== DAFTAR USER ===")
+    table = PrettyTable(["Username", "Role"])
     for u, info in USERS.items():
-        print(f"{u} - role: {info['role']}")
+        table.add_row([u, info['role']])
+    print(table)
     print()
 
 
 def add_user():
     print("\n=== TAMBAH USER ===")
-    username = input("Username baru: ").strip()
+    try:
+        username = input("Username baru: ").strip()
 
-    if username in USERS:
-        print("User sudah ada.\n")
+        if username in USERS:
+            print("User sudah ada.\n")
+            return
+
+        password = input("Password: ").strip()
+        role = input("Role (admin/inventory/pembeli): ").strip()
+    except Exception:
+        print("Input error.\n")
         return
 
-    password = input("Password: ").strip()
-    role = input("Role (admin/inventory/kasir): ").strip()
-
-    if role not in ["admin", "inventory", "kasir"]:
+    if role not in ["admin", "inventory", "pembeli"]:
         print("Role tidak valid.\n")
         return
 
@@ -59,7 +96,11 @@ def add_user():
 
 def delete_user():
     print("\n=== HAPUS USER ===")
-    username = input("Username yang dihapus: ").strip()
+    try:
+        username = input("User yang ingin dihapus: ").strip()
+    except Exception:
+        print("Input error.\n")
+        return
 
     if username not in USERS:
         print("User tidak ditemukan.\n")
@@ -69,16 +110,16 @@ def delete_user():
         print("User admin utama tidak boleh dihapus.\n")
         return
 
-    del USERS[username]
-    print("User berhasil dihapus.\n")
-
-
-def view_sales(sales_history):
-    print("\n=== RIWAYAT PENJUALAN ===")
-    if not sales_history:
-        print("Belum ada transaksi.\n")
+    # Konfirmasi
+    try:
+        confirm = input(f"Apakah anda yakin ingin menghapus '{username}'? (ya/tidak): ").strip().lower()
+    except Exception:
+        print("Input error.\n")
         return
 
-    for s in sales_history:
-        print(s)
-    print()
+    if confirm != "ya":
+        print("Penghapusan dibatalkan.\n")
+        return
+
+    del USERS[username]
+    print("User berhasil dihapus.\n")
