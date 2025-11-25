@@ -1,8 +1,7 @@
 from prettytable import PrettyTable
 
-# ===============================
-# DATA BARANG (DENGAN KATEGORI + STOK)
-# ===============================
+# DATA BARANG
+
 
 barang = [
     # A. Ruang Tamu
@@ -49,9 +48,7 @@ barang = [
 keranjang = []
 
 
-# ===============================
-# FUNGSI TAMPIL DATA
-# ===============================
+# FUNGSI TAMPIL DATA BARANG
 
 def lihat_barang_tersedia():
     print("\n DAFTAR BARANG ")
@@ -73,9 +70,7 @@ def lihat_keranjang():
     print()
 
 
-# ===============================
 # FUNGSI KERANJANG
-# ===============================
 
 def tambah():
     print("\n TAMBAH BARANG KE KERANJANG ")
@@ -157,9 +152,7 @@ def hapus():
     print("Barang dihapus.\n")
 
 
-# ===============================
 # CETAK NOTA + CHECKOUT
-# ===============================
 
 def cetak_nota():
     print("\n NOTA PEMBELIAN ")
@@ -198,9 +191,7 @@ def checkout():
     keranjang.clear()
 
 
-# ===============================
 # MENU UTAMA
-# ===============================
 
 def menu_keranjang():
     while True:
