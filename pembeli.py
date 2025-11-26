@@ -51,16 +51,16 @@ keranjang = []
 # FUNGSI TAMPIL DATA BARANG
 
 def lihat_barang_tersedia():
-    print("\n DAFTAR BARANG ")
+    print(" DAFTAR BARANG ")
     for b in barang:
         print(f"{b['id']}. {b['nama']} ({b['kategori']}) - Rp{b['harga']} | Stok: {b['stok']}")
     print()
 
 
 def lihat_keranjang():
-    print("\n KERANJANG ")
+    print(" KERANJANG ")
     if not keranjang:
-        print("Keranjang kosong.\n")
+        print("Keranjang kosong.")
         return
 
     i = 1
@@ -73,7 +73,7 @@ def lihat_keranjang():
 # FUNGSI KERANJANG
 
 def tambah():
-    print("\n TAMBAH BARANG KE KERANJANG ")
+    print(" TAMBAH BARANG KE KERANJANG ")
     lihat_barang_tersedia()
 
     try:
@@ -100,11 +100,11 @@ def tambah():
         "jumlah": jumlah
     })
 
-    print("Barang berhasil ditambahkan.\n")
+    print("Barang berhasil ditambahkan.")
 
 
 def ubah():
-    print("\n UBAH DATA DI KERANJANG ")
+    print(" UBAH DATA DI KERANJANG ")
     lihat_keranjang()
 
     if not keranjang:
@@ -128,11 +128,11 @@ def ubah():
         return
 
     keranjang[idx]["jumlah"] = jumlah_baru
-    print("Jumlah berhasil diubah.\n")
+    print("Jumlah berhasil diubah.")
 
 
 def hapus():
-    print("\n HAPUS BARANG ")
+    print(" HAPUS BARANG ")
     lihat_keranjang()
 
     if not keranjang:
@@ -149,13 +149,13 @@ def hapus():
         return
 
     keranjang.pop(idx)
-    print("Barang dihapus.\n")
+    print("Barang dihapus.")
 
 
 # CETAK NOTA + CHECKOUT
 
 def cetak_nota():
-    print("\n NOTA PEMBELIAN ")
+    print(" NOTA PEMBELIAN ")
 
     table = PrettyTable()
     table.field_names = ["No", "Nama Barang", "Harga", "Jumlah", "Subtotal"]
@@ -170,11 +170,11 @@ def cetak_nota():
         i += 1
 
     print(table)
-    print(f"TOTAL BAYAR : Rp{total}\n")
+    print(f"TOTAL BAYAR : Rp{total}")
 
 
 def checkout():
-    print("\n CHECKOUT ")
+    print(" CHECKOUT ")
 
     if not keranjang:
         print("Keranjang masih kosong.")
@@ -186,7 +186,7 @@ def checkout():
         barang_asli["stok"] -= item["jumlah"]
 
     cetak_nota()
-    print("Checkout selesai. Terima kasih!\n")
+    print("Checkout selesai. Terima kasih!")
 
     keranjang.clear()
 
@@ -212,12 +212,12 @@ def menu_keranjang():
         elif pilihan == "4":
             break
         else:
-            print("Pilihan tidak valid.\n")
+            print("Pilihan tidak valid.")
 
 
 def menu_pembeli():
     while True:
-        print("\n MENU PEMBELI ")
+        print(" MENU PEMBELI ")
         print("1. Lihat barang")
         print("2. Keranjang")
         print("3. Checkout")
@@ -235,4 +235,4 @@ def menu_pembeli():
             print("Terima kasih!")
             break
         else:
-            print("Pilihan tidak valid.\n")
+            print("Pilihan tidak valid.")
