@@ -2,7 +2,6 @@ from prettytable import PrettyTable
 
 # DATA BARANG
 
-
 barang = [
     # A. Ruang Tamu
     {"id": 1, "nama": "Sofa", "harga": 3000000, "stok": 5, "kategori": "Ruang Tamu"},
